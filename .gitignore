@@ -1,0 +1,10 @@
+node_modules/
+dist/
+.env
+.mongodb-data/
+*.log
+server/coverage/
+cloudflared.exe
+*.tmp
+.github/workflows/
+

@@ -1,0 +1,44 @@
+import { useI18n } from '../context/I18nContext';
+import { useSiteConfig } from '../context/SiteConfigContext';
+
+export default function SocialButtons() {
+  const { t } = useI18n();
+  const { whatsappNumber, instagram, email } = useSiteConfig();
+
+  const number = whatsappNumber ? whatsappNumber.replace(/[\s\-]/g, '').replace(/^0+/, '') : '';
+  const waHref = number ? `https://wa.me/${number.startsWith('+') ? number : '+'+number}` : null;
+  const igHref = instagram || null;
+
+  return (
+    <div className="fixed bottom-28 right-8 z-50 flex flex-col gap-3">
+      {waHref && (
+        <a href={waHref} target="_blank" rel="noopener noreferrer" className="group relative" title={t('whatsapp')}>
+          <span className="absolute bottom-full mb-3 right-0 bg-dark-900 text-white text-sm px-4 py-2 rounded-2xl shadow-xl opacity-0 group-hover:opacity-100 transition-all duration-300 translate-y-2 group-hover:translate-y-0 whitespace-nowrap">
+            {t('whatsapp')}
+            <span className="absolute top-full right-6 -mt-1 w-3 h-3 bg-dark-900 rotate-45"></span>
+          </span>
+          <div className="absolute inset-0 bg-gradient-to-br from-green-400/40 to-emerald-500/40 rounded-full blur-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-700 scale-150"></div>
+          <div className="relative w-14 h-14 rounded-full bg-gradient-to-br from-green-400 via-emerald-400 to-green-500 shadow-xl shadow-green-500/30 flex items-center justify-center transition-all duration-500 hover:scale-110 hover:rotate-3 group-hover:shadow-2xl group-hover:shadow-green-500/40">
+            <svg className="w-7 h-7 text-white relative z-10 drop-shadow-lg" viewBox="0 0 24 24" fill="currentColor">
+              <path d="M17.507 9.772c0 1.27-.259 2.488-.752 3.63-.494 1.14-1.16 2.082-1.997 2.828-.838.747-1.793 1.323-2.864 1.728-1.07.405-2.199.608-3.387.608-1.317 0-2.527-.239-3.63-.717l-4.051 1.345 1.358-3.957A8.74 8.74 0 011.5 9.772c0-1.27.24-2.488.717-3.63a9.128 9.128 0 011.978-2.828A9.244 9.244 0 017.51 1.3 9.62 9.62 0 0112 .003c1.27 0 2.488.24 3.63.717a9.342 9.342 0 012.828 1.979 9.227 9.227 0 011.979 2.827 9.42 9.42 0 01.717 3.556c0 1.317-.24 2.534-.717 3.63-.494 1.14-1.16 2.086-1.997 2.838l-2.794 1.13a6.875 6.875 0 01-.913-2.503 6.602 6.602 0 01-.215-1.648zm-2.78 1.963c.186-.304.42-.636.7-.998.282-.362.56-.677.838-.945.279-.269.56-.494.84-.677.282-.183.58-.296.895-.34v-.05c0-.523-.132-1.03-.395-1.524a5.307 5.307 0 00-1.047-1.38 4.798 4.798 0 00-1.538-1.002 5.162 5.162 0 00-1.886-.377c-.993 0-1.942.242-2.845.725a7.583 7.583 0 00-2.305 1.858c-.657.75-1.157 1.569-1.5 2.456s-.545 1.711-.545 2.57c0 .598.117 1.215.35 1.85.256.634.588 1.198.996 1.691.217-.616.5-1.194.85-1.734.35-.54.763-1.003 1.24-1.39a5.11 5.11 0 011.558-.935 5.216 5.216 0 011.607-.333c.59 0 1.123.108 1.597.324.474.215.92.508 1.338.878.416.37.705-.132.85-.322z" />
+            </svg>
+          </div>
+        </a>
+      )}
+      {igHref && (
+        <a href={igHref} target="_blank" rel="noopener noreferrer" className="group relative" title="Instagram">
+          <span className="absolute bottom-full mb-3 right-0 bg-dark-900 text-white text-sm px-4 py-2 rounded-2xl shadow-xl opacity-0 group-hover:opacity-100 transition-all duration-300 translate-y-2 group-hover:translate-y-0 whitespace-nowrap">
+            Instagram
+            <span className="absolute top-full right-6 -mt-1 w-3 h-3 bg-dark-900 rotate-45"></span>
+          </span>
+          <div className="absolute inset-0 bg-gradient-to-br from-pink-400/40 to-purple-500/40 rounded-full blur-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-700 scale-150"></div>
+          <div className="relative w-14 h-14 rounded-full bg-gradient-to-br from-pink-400 via-purple-400 to-purple-500 shadow-xl shadow-pink-500/30 flex items-center justify-center transition-all duration-500 hover:scale-110 hover:-rotate-3 group-hover:shadow-2xl group-hover:shadow-pink-500/40">
+            <svg className="w-7 h-7 text-white relative z-10 drop-shadow-lg" viewBox="0 0 24 24" fill="currentColor">
+              <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z" />
+            </svg>
+          </div>
+        </a>
+      )}
+    </div>
+  );
+}

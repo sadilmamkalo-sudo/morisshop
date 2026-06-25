@@ -1,0 +1,36 @@
+=============== MORISSESHOP - ONLINE GUIDE ===============
+            تشغيل السايت على الأنترنت مجانا
+
+--------------------------------------------------------
+الخطوة 1: شغلي السايت محليا
+--------------------------------------------------------
+- فتحي الملف: start-server.bat (دوزي عليه Double-click)
+
+--------------------------------------------------------
+الخطوة 2: حملي cloudflared
+--------------------------------------------------------
+- فتحي الرابط: https://developers.cloudflare.com/cloudflare-one/connections/connect-networks/downloads/
+- دوزي على "Windows" 
+- حملي الملف: cloudflared-windows-amd64.exe
+- سميه: cloudflared.exe
+- حطيه ف: C:\Users\Administrateur\Desktop\site weeb e-commers\
+
+--------------------------------------------------------
+الخطوة 3: شغلي التونيل
+--------------------------------------------------------
+- فتحي الملف: start-tunnel.bat (دوزي عليه Double-click)
+- كايبان شي URL بحال: https://random-name.trycloudflare.com
+- دوزي ليه -> السايت ديالك خارجي!
+
+--------------------------------------------------------
+أو ببساطة من PowerShell:
+--------------------------------------------------------
+cd C:\Users\Administrateur\Desktop\site weeb e-commers
+.\cloudflared.exe tunnel --url http://localhost:5000
+
+--------------------------------------------------------
+معلومات الدخول للوحة التحكم:
+--------------------------------------------------------
+Admin: http://localhost:5000/admin
+Email: admin@morisshop.com
+Password: Admin123456

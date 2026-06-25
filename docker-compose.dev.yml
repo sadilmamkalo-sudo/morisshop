@@ -1,0 +1,67 @@
+version: '3.8'
+
+services:
+  mongodb:
+    image: mongo:7
+    container_name: morisshop-mongodb-dev
+    restart: unless-stopped
+    ports:
+      - "27017:27017"
+    volumes:
+      - mongo-data-dev:/data/db
+    networks:
+      - app-network-dev
+    healthcheck:
+      test: echo 'db.runCommand("ping").ok' | mongosh --quiet
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  backend:
+    build:
+      context: ./server
+      dockerfile: Dockerfile
+    container_name: morisshop-backend-dev
+    restart: unless-stopped
+    ports:
+      - "5000:5000"
+    env_file:
+      - .env
+    environment:
+      - MONGO_URI=mongodb://mongodb:27017/morisshop
+      - NODE_ENV=development
+    volumes:
+      - ./server:/app
+      - /app/node_modules
+    depends_on:
+      mongodb:
+        condition: service_healthy
+    networks:
+      - app-network-dev
+    command: ["npx", "nodemon", "--legacy-watch", "server.js"]
+
+  client:
+    image: node:20-alpine
+    container_name: morisshop-client-dev
+    restart: unless-stopped
+    ports:
+      - "5173:5173"
+    working_dir: /app
+    volumes:
+      - ./client:/app
+      - /app/node_modules
+    environment:
+      - VITE_API_URL=http://localhost:5000/api
+      - NODE_ENV=development
+    depends_on:
+      - backend
+    networks:
+      - app-network-dev
+    command: ["npx", "vite", "--host", "0.0.0.0"]
+
+volumes:
+  mongo-data-dev:
+
+networks:
+  app-network-dev:
+    driver: bridge
