@@ -62,7 +62,7 @@ connectDB().then(async () => {
       role: 'superadmin',
       permissions: ['manage_products', 'manage_orders', 'manage_users', 'manage_admins', 'manage_coupons', 'manage_tickets', 'view_reports', 'manage_settings']
     });
-    console.log('Super admin created (admin@morisshop.com / Admin123456)');
+    console.log('Super admin created from .env credentials');
   }
   const Setting = require('./models/Setting');
   const seedSettings = {
