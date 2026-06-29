@@ -34,50 +34,78 @@ export default function Shop() {
   }, [query, category, sort, minPrice, maxPrice]);
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-moris-50 via-yellow-50 to-orange-50 dark:from-dark-950 dark:via-dark-900 dark:to-dark-950 py-24">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }}>
-          <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 mb-10">
-            <h1 className="text-4xl font-bold font-display text-gradient flex items-center gap-3">
-              <span className="w-1 h-8 bg-gradient-to-b from-moris-500 to-orange-500 rounded-full inline-block"></span>
-              {t('nav.shop')}
-              {category && <span className="text-xl text-gray-400 font-normal">/ {category}</span>}
-            </h1>
+    <div className="min-h-screen bg-white dark:bg-ink-950 pt-28 pb-24">
+      <div className="max-w-7xl mx-auto px-6 lg:px-8">
+        <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: 0.4 }}>
+          <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-6 mb-12">
+            <div>
+              <h1 className="text-3xl md:text-4xl font-display text-ink-900 dark:text-white">
+                {category || t('nav.shop')}
+              </h1>
+              {query && (
+                <p className="text-sm text-ink-500 mt-2">
+                  {products.length} {t('shop.searchResults')} &ldquo;{query}&rdquo;
+                </p>
+              )}
+            </div>
             <div className="flex items-center gap-3 flex-wrap">
-              <div className="relative">
-                <select value={sort} onChange={e => { setSort(e.target.value); updateFilter('sort', e.target.value); }} className="input-field pr-8 appearance-none cursor-pointer">
-                  <option value="">{t('shop.sort')}</option>
-                  <option value="price_asc">{t('shop.priceLow')}</option>
-                  <option value="price_desc">{t('shop.priceHigh')}</option>
-                  <option value="newest">{t('shop.newest')}</option>
-                  <option value="rating">{t('shop.topRated')}</option>
-                </select>
-              </div>
-              <div className="flex items-center gap-2 text-sm">
-                <input type="number" value={minPrice} onChange={e => { setMinPrice(e.target.value); updateFilter('minPrice', e.target.value); }} className="input-field py-1.5 w-20" placeholder="Min" />
-                <span className="text-gray-400">—</span>
-                <input type="number" value={maxPrice} onChange={e => { setMaxPrice(e.target.value); updateFilter('maxPrice', e.target.value); }} className="input-field py-1.5 w-20" placeholder="Max" />
+              <select
+                value={sort}
+                onChange={e => { setSort(e.target.value); updateFilter('sort', e.target.value); }}
+                className="px-4 py-2.5 text-sm border border-ink-200 dark:border-ink-700 bg-transparent text-ink-700 dark:text-ink-300 focus:border-ink-900 dark:focus:border-white outline-none"
+              >
+                <option value="">{t('shop.sort')}</option>
+                <option value="price_asc">{t('shop.priceLow')}</option>
+                <option value="price_desc">{t('shop.priceHigh')}</option>
+                <option value="newest">{t('shop.newest')}</option>
+                <option value="rating">{t('shop.topRated')}</option>
+              </select>
+              <div className="flex items-center gap-2">
+                <input
+                  type="number"
+                  value={minPrice}
+                  onChange={e => { setMinPrice(e.target.value); updateFilter('minPrice', e.target.value); }}
+                  className="w-20 px-3 py-2.5 text-sm border border-ink-200 dark:border-ink-700 bg-transparent text-ink-700 dark:text-ink-300 focus:border-ink-900 dark:focus:border-white outline-none"
+                  placeholder="Min"
+                />
+                <span className="text-ink-300 dark:text-ink-600">-</span>
+                <input
+                  type="number"
+                  value={maxPrice}
+                  onChange={e => { setMaxPrice(e.target.value); updateFilter('maxPrice', e.target.value); }}
+                  className="w-20 px-3 py-2.5 text-sm border border-ink-200 dark:border-ink-700 bg-transparent text-ink-700 dark:text-ink-300 focus:border-ink-900 dark:focus:border-white outline-none"
+                  placeholder="Max"
+                />
               </div>
             </div>
           </div>
 
-          {query && <p className="mb-6 text-gray-500">{t('shop.searchResults')} "<strong>{query}</strong>" ({products.length})</p>}
-
           {products.length === 0 ? (
-            <div className="card-solid text-center py-20">
-              <div className="text-6xl mb-6">🔍</div>
-              <p className="text-xl text-gray-500 mb-4">{t('shop.noProducts')}</p>
-              <p className="text-gray-400">{t('shop.tryDifferent')}</p>
+            <div className="text-center py-32 border border-ink-100 dark:border-ink-800">
+              <div className="mb-6">
+                <svg className="w-12 h-12 mx-auto text-ink-300 dark:text-ink-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+                </svg>
+              </div>
+              <p className="text-base text-ink-500 dark:text-ink-400 mb-2">{t('shop.noProducts')}</p>
+              <p className="text-sm text-ink-400 dark:text-ink-500">{t('shop.tryDifferent')}</p>
             </div>
           ) : (
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-px bg-ink-100 dark:bg-ink-800">
               {products.map((product, i) => (
-                <motion.div key={product._id} initial={{ opacity: 0, y: 30 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: i * 0.05 }}>
+                <motion.div
+                  key={product._id}
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  transition={{ delay: i * 0.04 }}
+                  className="bg-white dark:bg-ink-950"
+                >
                   <ProductCard product={product} />
                 </motion.div>
               ))}
             </div>
           )}
+
           <RecentlyViewed />
         </motion.div>
       </div>

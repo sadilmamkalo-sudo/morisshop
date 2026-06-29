@@ -86,12 +86,11 @@ export default function App() {
 
   if (!serverReady) {
     return (
-      <div className="min-h-screen flex flex-col items-center justify-center bg-gradient-to-br from-moris-50 via-yellow-50 to-orange-50 dark:from-dark-950 dark:via-dark-900 dark:to-dark-950">
-        <div className="w-16 h-16 rounded-2xl bg-gradient-to-br from-moris-500 to-orange-500 flex items-center justify-center text-white text-3xl font-bold shadow-2xl shadow-moris-500/30 animate-bounce-gentle mb-6">M</div>
-        <div className="text-2xl font-bold font-display text-gradient mb-2">{siteName}</div>
-        <div className="flex items-center gap-2 text-gray-500">
-          <div className="w-2 h-2 rounded-full bg-moris-500 animate-pulse"></div>
-          <span>Loading...</span>
+      <div className="min-h-screen flex flex-col items-center justify-center bg-white dark:bg-ink-950">
+        <div className="text-4xl font-display text-ink-900 dark:text-white animate-fade-in mb-4">{siteName}</div>
+        <div className="flex items-center gap-2 text-ink-400">
+          <div className="w-2 h-2 rounded-full bg-clay-500 animate-pulse"></div>
+          <span className="text-sm">Loading...</span>
         </div>
       </div>
     );
@@ -99,7 +98,7 @@ export default function App() {
 
   return (
     <HelmetProvider>
-      <div className="min-h-screen flex flex-col bg-gray-50 dark:bg-gray-900 text-gray-900 dark:text-white transition-colors duration-300">
+      <div className="min-h-screen flex flex-col bg-white dark:bg-ink-950 text-ink-900 dark:text-ink-100 transition-colors duration-300">
         <ScrollProgress />
         <Navbar />
         <main className="flex-1">

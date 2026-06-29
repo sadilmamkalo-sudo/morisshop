@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Space+Grotesk:wght@400;500;600;700&family=Noto+Naskh+Arabic:wght@400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=Inter:wght@300;400;500;600;700&family=Noto+Naskh+Arabic:wght@400;500;600;700&display=swap');
 
 @tailwind base;
 @tailwind components;
@@ -8,170 +8,101 @@
   *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
   html { scroll-behavior: smooth; }
   body {
-    @apply bg-[#fafafa] dark:bg-dark-950 text-dark-900 dark:text-gray-100 font-body antialiased;
+    @apply bg-white dark:bg-ink-950 text-ink-900 dark:text-ink-100 font-body antialiased;
     transition: background-color 0.3s ease, color 0.3s ease;
   }
   html[dir="rtl"] body { font-family: 'Noto Naskh Arabic', 'Inter', system-ui, sans-serif; }
-  h1, h2, h3, h4, h5, h6 { font-family: 'Space Grotesk', system-ui, sans-serif; }
-  html[dir="rtl"] h1, html[dir="rtl"] h2, html[dir="rtl"] h3 { font-family: 'Noto Naskh Arabic', 'Space Grotesk', sans-serif; }
+  h1, h2, h3 { font-family: 'DM Serif Display', Georgia, serif; font-weight: 400; }
+  html[dir="rtl"] h1, html[dir="rtl"] h2, html[dir="rtl"] h3 { font-family: 'Noto Naskh Arabic', 'DM Serif Display', serif; }
 
-  ::selection { @apply bg-moris-500/30 text-moris-900; }
-  ::-webkit-scrollbar { width: 8px; }
-  ::-webkit-scrollbar-track { @apply bg-gray-100 dark:bg-dark-800; }
-  ::-webkit-scrollbar-thumb { @apply bg-moris-400 rounded-full hover:bg-moris-500; }
+  ::selection { @apply bg-clay-500/20 text-clay-800; }
+  ::-webkit-scrollbar { width: 6px; }
+  ::-webkit-scrollbar-track { @apply bg-ink-50 dark:bg-ink-900; }
+  ::-webkit-scrollbar-thumb { @apply bg-ink-300 dark:bg-ink-600 rounded-full; }
 }
 
 @layer components {
-  .btn-primary {
-    @apply relative overflow-hidden bg-gradient-to-r from-moris-500 to-orange-500 text-white font-semibold py-3.5 px-8 rounded-2xl 
-           transition-all duration-300 ease-out shadow-lg shadow-moris-500/25 hover:shadow-2xl hover:shadow-moris-500/40
-           hover:scale-[1.02] active:scale-95
-           before:absolute before:inset-0 before:bg-white/20 before:translate-x-[-100%] before:skew-x-[-20deg] 
-           before:transition-transform before:duration-500 hover:before:translate-x-[200%];
+  .btn {
+    @apply inline-flex items-center justify-center px-6 py-3 font-medium text-sm tracking-wide
+           transition-all duration-200 ease-out;
   }
-  .btn-primary::before { content: ''; }
-  .btn-secondary {
-    @apply relative overflow-hidden bg-gradient-to-r from-emerald-500 to-green-500 text-white font-semibold py-3.5 px-8 rounded-2xl
-           transition-all duration-300 ease-out shadow-lg shadow-emerald-500/25 hover:shadow-2xl hover:shadow-emerald-500/40
-           hover:scale-[1.02] active:scale-95;
+  .btn-primary {
+    @apply btn bg-ink-900 dark:bg-white text-white dark:text-ink-900
+           hover:bg-ink-700 dark:hover:bg-ink-100;
   }
   .btn-outline {
-    @apply relative overflow-hidden border-2 border-moris-500 text-moris-600 dark:text-moris-400 font-semibold py-3 px-8 rounded-2xl
-           transition-all duration-300 hover:bg-moris-500 hover:text-white hover:shadow-lg hover:shadow-moris-500/25
-           active:scale-95;
+    @apply btn border border-ink-300 dark:border-ink-600 text-ink-900 dark:text-ink-100
+           hover:bg-ink-900 hover:text-white dark:hover:bg-white dark:hover:text-ink-900;
   }
   .btn-ghost {
-    @apply font-semibold py-3 px-6 rounded-xl transition-all duration-300
-           hover:bg-gray-100 dark:hover:bg-dark-700 active:scale-95;
+    @apply btn text-ink-600 dark:text-ink-400 hover:bg-ink-100 dark:hover:bg-ink-800;
   }
   .btn-danger {
-    @apply bg-gradient-to-r from-red-500 to-rose-500 text-white font-semibold py-2.5 px-5 rounded-xl
-           transition-all duration-300 hover:shadow-lg hover:shadow-red-500/30 active:scale-95;
+    @apply btn bg-red-600 text-white hover:bg-red-700;
+  }
+  .btn-sm {
+    @apply px-4 py-2 text-xs;
+  }
+  .btn-lg {
+    @apply px-8 py-4 text-base;
   }
 
   .card {
-    @apply bg-white/80 dark:bg-dark-800/80 backdrop-blur-xl rounded-2xl shadow-lg 
-           border border-gray-100/50 dark:border-dark-700/50
-           transition-all duration-500 hover:shadow-2xl hover:shadow-moris-500/10 
-           hover:border-moris-200/50 dark:hover:border-moris-700/50
-           hover:-translate-y-1;
+    @apply bg-white dark:bg-ink-900 border border-ink-100 dark:border-ink-800;
+    transition: box-shadow 0.3s ease, transform 0.3s ease;
   }
-  .card-solid {
-    @apply bg-white dark:bg-dark-800 rounded-2xl shadow-lg 
-           border border-gray-100 dark:border-dark-700
-           transition-all duration-300 hover:shadow-xl;
+  .card:hover {
+    @apply shadow-xl;
+    transform: translateY(-2px);
   }
-  .glass {
-    @apply bg-white/70 dark:bg-dark-800/70 backdrop-blur-2xl border-b border-gray-200/50 dark:border-dark-700/50;
+  .card-sm {
+    @apply card p-4;
   }
-  .glass-card {
-    @apply bg-white/60 dark:bg-dark-800/60 backdrop-blur-xl rounded-2xl 
-           border border-white/20 dark:border-dark-700/30 shadow-xl;
+  .card-md {
+    @apply card p-6;
+  }
+  .card-lg {
+    @apply card p-8;
   }
 
-  .input-field {
-    @apply w-full px-5 py-3.5 rounded-2xl border-2 border-gray-200 dark:border-dark-700 
-           bg-white dark:bg-dark-800 text-dark-900 dark:text-white
-           placeholder-gray-400 dark:placeholder-gray-500
-           focus:border-moris-500 focus:ring-4 focus:ring-moris-500/20 dark:focus:ring-moris-500/10 
-           outline-none transition-all duration-300;
+  .input {
+    @apply w-full px-4 py-3 border border-ink-200 dark:border-ink-700
+           bg-white dark:bg-ink-900 text-ink-900 dark:text-ink-100
+           placeholder-ink-400 dark:placeholder-ink-500
+           focus:border-ink-900 dark:focus:border-ink-300
+           outline-none transition-all duration-200 text-sm;
   }
-  .input-field-error {
-    @apply border-red-400 focus:border-red-500 focus:ring-red-500/20;
+  .input-error {
+    @apply border-red-500 focus:border-red-500;
   }
 
   .badge {
-    @apply inline-flex items-center px-3 py-1 rounded-full text-xs font-semibold;
+    @apply inline-flex items-center px-2.5 py-1 text-[11px] font-medium uppercase tracking-wider;
   }
-  .badge-primary { @apply bg-moris-100 text-moris-800 dark:bg-moris-900/50 dark:text-moris-300; }
-  .badge-success { @apply bg-emerald-100 text-emerald-800 dark:bg-emerald-900/50 dark:text-emerald-300; }
-  .badge-danger { @apply bg-red-100 text-red-800 dark:bg-red-900/50 dark:text-red-300; }
-  .badge-warning { @apply bg-yellow-100 text-yellow-800 dark:bg-yellow-900/50 dark:text-yellow-300; }
+  .badge-dark { @apply bg-ink-900 dark:bg-white text-white dark:text-ink-900; }
+  .badge-light { @apply bg-ink-100 dark:bg-ink-800 text-ink-700 dark:text-ink-300; }
+  .badge-sale { @apply bg-clay-500 text-white; }
+  .badge-success { @apply bg-green-700 text-white; }
 
-  .section-title {
-    @apply text-4xl md:text-5xl font-bold font-display;
-    background: linear-gradient(135deg, #f97316, #eab308);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
+  /* backward compatibility aliases */
+  .card-solid { @apply card; }
+  .input-field { @apply input; }
+  .text-gradient { color: inherit; }
+  .section-title { @apply section-heading; }
+  .section-subtitle { @apply section-sub; }
+
+  .section-heading {
+    @apply text-3xl md:text-4xl font-display text-ink-900 dark:text-white;
   }
-  .section-subtitle {
-    @apply text-lg text-gray-500 dark:text-gray-400 mt-4 max-w-2xl;
+  .section-sub {
+    @apply text-ink-500 dark:text-ink-400 text-sm max-w-md leading-relaxed;
   }
 
-  .shimmer-bg {
-    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.1), transparent);
-    background-size: 200% 100%;
-    animation: shimmer 2s linear infinite;
-  }
-  html.dark .shimmer-bg {
-    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.05), transparent);
-    background-size: 200% 100%;
+  .divider {
+    @apply h-px bg-ink-100 dark:bg-ink-800 my-16;
   }
 }
 
 @layer utilities {
-  .text-gradient {
-    @apply bg-clip-text text-transparent bg-gradient-to-r from-moris-500 via-orange-500 to-yellow-500;
-  }
-  .text-gradient-primary {
-    @apply bg-clip-text text-transparent bg-gradient-to-r from-moris-500 to-yellow-500;
-  }
-  .shadow-glow { box-shadow: 0 0 30px rgba(249, 115, 22, 0.3); }
-  .shadow-glow-lg { box-shadow: 0 0 60px rgba(249, 115, 22, 0.2); }
+  .text-balance { text-wrap: balance; }
 }
-
-@keyframes scrollReveal {
-  from { opacity: 0; transform: translateY(40px); }
-  to { opacity: 1; transform: translateY(0); }
-}
-.scroll-reveal { animation: scrollReveal 0.7s ease-out forwards; }
-
-@keyframes float {
-  0%, 100% { transform: translateY(0) rotate(0deg); }
-  33% { transform: translateY(-10px) rotate(1deg); }
-  66% { transform: translateY(5px) rotate(-1deg); }
-}
-
-@keyframes shimmer {
-  0% { background-position: -200% 0; }
-  100% { background-position: 200% 0; }
-}
-
-@keyframes gradient-shift {
-  0% { background-position: 0% 50%; }
-  50% { background-position: 100% 50%; }
-  100% { background-position: 0% 50%; }
-}
-.animate-gradient { background-size: 200% 200%; animation: gradient-shift 4s ease infinite; }
-
-@keyframes rippleAnim {
-  to { transform: scale(4); opacity: 0; }
-}
-.ripple-effect {
-  position: absolute;
-  border-radius: 50%;
-  background: rgba(255,255,255,0.5);
-  transform: scale(0);
-  animation: rippleAnim 0.6s ease-out;
-  pointer-events: none;
-}
-html.dark .ripple-effect {
-  background: rgba(255,255,255,0.2);
-}
-
-@keyframes particleFloat {
-  0% { transform: translateY(0) rotate(0deg) scale(1); opacity: 0.3; }
-  25% { opacity: 0.6; }
-  50% { transform: translateY(-30px) rotate(180deg) scale(1.2); opacity: 0.8; }
-  75% { opacity: 0.4; }
-  100% { transform: translateY(-60px) rotate(360deg) scale(1); opacity: 0; }
-}
-
-@keyframes morphBlob {
-  0% { border-radius: 60% 40% 30% 70% / 60% 30% 70% 40%; }
-  50% { border-radius: 30% 60% 70% 40% / 50% 60% 30% 60%; }
-  100% { border-radius: 60% 40% 30% 70% / 60% 30% 70% 40%; }
-}
-.animate-blob { animation: morphBlob 8s ease-in-out infinite; }
-.animate-blob-delayed { animation: morphBlob 8s ease-in-out 4s infinite; }
