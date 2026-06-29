@@ -28,6 +28,7 @@ export default function Footer() {
                 { to: '/shop', label: t('nav.shop') },
                 { to: '/cart', label: t('nav.cart') },
                 { to: '/tickets', label: t('nav.tickets') },
+                { to: '/track', label: t('nav.trackOrder') },
               ].map(link => (
                 <Link key={link.to} to={link.to} className="block text-sm text-ink-500 dark:text-ink-400 hover:text-ink-900 dark:hover:text-white transition-colors">
                   {link.label}

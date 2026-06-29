@@ -8,3 +8,10 @@ cloudflared.exe
 *.tmp
 .github/workflows/
 
+
+# Logs and temp files
+*.log
+err.txt
+out.txt
+tunnel*.txt
+start_prod.*

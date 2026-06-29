@@ -51,6 +51,9 @@ export default function Navbar() {
             <Link to="/shop" className="text-sm font-medium text-ink-600 dark:text-ink-400 hover:text-ink-900 dark:hover:text-white transition-colors">
               {t('nav.shop')}
             </Link>
+            <Link to="/track" className="text-sm font-medium text-ink-600 dark:text-ink-400 hover:text-ink-900 dark:hover:text-white transition-colors">
+              {t('nav.trackOrder')}
+            </Link>
           </nav>
 
           <div className="hidden md:flex items-center gap-5">
@@ -164,6 +167,7 @@ export default function Navbar() {
           <div className="md:hidden pb-6 space-y-1 border-t border-ink-100 dark:border-ink-800 pt-4">
             <Link to="/" onClick={() => setMenuOpen(false)} className="block px-2 py-3 text-sm font-medium text-ink-600 dark:text-ink-400 hover:text-ink-900 dark:hover:text-white">{t('nav.home')}</Link>
             <Link to="/shop" onClick={() => setMenuOpen(false)} className="block px-2 py-3 text-sm font-medium text-ink-600 dark:text-ink-400 hover:text-ink-900 dark:hover:text-white">{t('nav.shop')}</Link>
+            <Link to="/track" onClick={() => setMenuOpen(false)} className="block px-2 py-3 text-sm font-medium text-ink-600 dark:text-ink-400 hover:text-ink-900 dark:hover:text-white">{t('nav.trackOrder')}</Link>
             <form onSubmit={(e) => { handleSearch(e); setMenuOpen(false); }} className="px-2 py-2">
               <input type="text" value={searchQuery} onChange={e => setSearchQuery(e.target.value)} placeholder={t('common.search')} className="input py-2 text-sm" />
             </form>

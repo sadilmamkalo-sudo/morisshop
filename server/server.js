@@ -46,6 +46,7 @@ const io = new Server(server, { cors: { origin: process.env.CLIENT_URL ? [proces
 
 io.on('connection', (socket) => {
   socket.on('join', (userId) => { if (userId) socket.join(`user_${userId}`); });
+  socket.on('join_order', (orderId) => { if (orderId) socket.join(`order_${orderId}`); });
   socket.on('disconnect', () => {});
 });
 

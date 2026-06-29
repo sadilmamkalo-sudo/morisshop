@@ -36,6 +36,7 @@ import AdminGiftCards from './pages/admin/AdminGiftCards';
 import VerifyEmail from './pages/VerifyEmail';
 import ForgotPassword from './pages/ForgotPassword';
 import ResetPassword from './pages/ResetPassword';
+import Tracking from './pages/Tracking';
 import Compare from './pages/Compare';
 import Blog from './pages/Blog';
 import BlogPost from './pages/BlogPost';
@@ -129,6 +130,8 @@ export default function App() {
               <Route path="/verify-email/:token" element={<AnimatedPage><VerifyEmail /></AnimatedPage>} />
               <Route path="/forgot-password" element={<AnimatedPage><ForgotPassword /></AnimatedPage>} />
               <Route path="/reset-password/:token" element={<AnimatedPage><ResetPassword /></AnimatedPage>} />
+              <Route path="/track" element={<AnimatedPage><Tracking /></AnimatedPage>} />
+              <Route path="/track/:id" element={<AnimatedPage><Tracking /></AnimatedPage>} />
               <Route path="/compare" element={<AnimatedPage><Compare /></AnimatedPage>} />
               <Route path="/blog" element={<AnimatedPage><Blog /></AnimatedPage>} />
               <Route path="/blog/:slug" element={<AnimatedPage><BlogPost /></AnimatedPage>} />

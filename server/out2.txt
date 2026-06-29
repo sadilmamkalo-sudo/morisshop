@@ -1,0 +1,4 @@
+Server running on port 5000
+MongoDB Connected: ac-o3mrplr-shard-00-00.otnyo3v.mongodb.net
+Settings seeded
+Found 14 existing products

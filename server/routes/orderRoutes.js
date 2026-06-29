@@ -111,14 +111,64 @@ router.put('/:id/status', protect, adminOnly, hasPermission('manage_orders'), as
     if (!order) return res.status(404).json({ message: 'Order not found' });
     order.status = status;
     order.trackingHistory.push({ status, note: note || `Status updated to ${status}`, updatedAt: new Date() });
+    if (status === 'shipped') { order.shippedAt = new Date(); }
     if (status === 'delivered') { order.isPaid = true; order.paidAt = new Date(); order.deliveredAt = new Date(); }
-    if (status === 'cancelled') { await addPoints(order.user, -order.totalPrice * 0.5); }
+    if (status === 'cancelled') { order.cancelledAt = new Date(); await addPoints(order.user, -order.totalPrice * 0.5); }
     await order.save();
     const user = await User.findById(order.user);
     if (user) orderStatusEmail(order, user);
     if (createNotification) createNotification({ user: order.user, type: 'order', title: 'Order Updated', message: `Order #${order._id.toString().slice(-8)} is now ${status}`, link: `/orders/${order._id}` });
     if (logActivity) logActivity({ user: req.user._id, action: `order_${status}`, resource: 'Order', resourceId: order._id });
+    if (req.app.get('io')) {
+      req.app.get('io').to(`order_${order._id}`).emit('order_status_update', {
+        status: order.status,
+        trackingHistory: order.trackingHistory,
+        estimatedDeliveryDate: order.estimatedDeliveryDate,
+        trackingNumber: order.trackingNumber,
+        carrier: order.carrier,
+        shippedAt: order.shippedAt,
+        deliveredAt: order.deliveredAt,
+        cancelledAt: order.cancelledAt
+      });
+    }
     res.json(order);
+  } catch (err) {
+    res.status(500).json({ message: err.message });
+  }
+});
+
+router.put('/:id/tracking', protect, adminOnly, hasPermission('manage_orders'), async (req, res) => {
+  try {
+    const { trackingNumber, carrier, estimatedDeliveryDate } = req.body;
+    const order = await Order.findById(req.params.id);
+    if (!order) return res.status(404).json({ message: 'Order not found' });
+    if (trackingNumber !== undefined) order.trackingNumber = trackingNumber;
+    if (carrier !== undefined) order.carrier = carrier;
+    if (estimatedDeliveryDate !== undefined) order.estimatedDeliveryDate = estimatedDeliveryDate;
+    await order.save();
+    res.json(order);
+  } catch (err) {
+    res.status(500).json({ message: err.message });
+  }
+});
+
+router.get('/track/:id', async (req, res) => {
+  try {
+    const order = await Order.findById(req.params.id).populate('user', 'name');
+    if (!order) return res.status(404).json({ message: 'Order not found' });
+    res.json({
+      _id: order._id,
+      status: order.status,
+      trackingHistory: order.trackingHistory,
+      estimatedDeliveryDate: order.estimatedDeliveryDate,
+      trackingNumber: order.trackingNumber,
+      carrier: order.carrier,
+      createdAt: order.createdAt,
+      shippedAt: order.shippedAt,
+      deliveredAt: order.deliveredAt,
+      cancelledAt: order.cancelledAt,
+      user: order.user ? { name: order.user.name } : null
+    });
   } catch (err) {
     res.status(500).json({ message: err.message });
   }
