@@ -14,17 +14,17 @@ export default function Blog() {
   const getDescription = (post) => post.description?.[lang] || post.description?.en || post.description || '';
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-moris-50 via-yellow-50 to-orange-50 dark:from-dark-950 dark:via-dark-900 dark:to-dark-950 py-24">
+    <div className="min-h-screen bg-orange-50 dark:from-ink-950 dark:via-ink-900 dark:to-ink-950 py-24">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }}>
-          <h1 className="text-4xl font-bold font-display text-gradient mb-10 flex items-center gap-3">
-            <span className="w-1 h-8 bg-gradient-to-b from-moris-500 to-orange-500 rounded-full inline-block"></span>
+          <h1 className="text-4xl font-bold font-display  mb-10 flex items-center gap-3">
+            <span className="w-1 h-8 bg-clay-500 rounded-full inline-block"></span>
             Blog
           </h1>
           {posts.length === 0 ? (
-            <div className="card-solid text-center py-20">
-              <div className="text-6xl mb-6">📝</div>
-              <p className="text-xl text-gray-500">No blog posts yet</p>
+            <div className="card text-center py-20">
+              <div className="text-6xl mb-6"></div>
+              <p className="text-xl text-ink-500">No blog posts yet</p>
             </div>
           ) : (
             <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
@@ -35,18 +35,18 @@ export default function Blog() {
                       {post.image ? (
                         <img src={post.image} alt={getTitle(post)} loading="lazy" className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700" />
                       ) : (
-                        <div className="w-full h-full bg-gradient-to-br from-moris-500/20 to-orange-500/20 flex items-center justify-center text-4xl">📰</div>
+                        <div className="w-full h-full bg-clay-500/20 flex items-center justify-center text-4xl"></div>
                       )}
                     </div>
                     <div className="p-5">
-                      <div className="flex items-center gap-3 text-xs text-gray-400 mb-3">
+                      <div className="flex items-center gap-3 text-xs text-ink-400 mb-3">
                         <span>{new Date(post.createdAt).toLocaleDateString()}</span>
                         {post.tags?.length > 0 && post.tags.slice(0, 2).map(tag => (
-                          <span key={tag} className="px-2 py-0.5 rounded-full bg-moris-100 dark:bg-moris-900/30 text-moris-600 dark:text-moris-400">{tag}</span>
+                          <span key={tag} className="px-2 py-0.5 rounded-full bg-clay-100 dark:bg-clay-900/30 text-clay-600 dark:text-clay-400">{tag}</span>
                         ))}
                       </div>
-                      <h2 className="font-bold text-lg mb-2 group-hover:text-moris-600 dark:group-hover:text-moris-400 transition-colors">{getTitle(post)}</h2>
-                      <p className="text-sm text-gray-500 dark:text-gray-400 line-clamp-2">{getDescription(post)}</p>
+                      <h2 className="font-bold text-lg mb-2 group-hover:text-clay-600 dark:group-hover:text-clay-400 transition-colors">{getTitle(post)}</h2>
+                      <p className="text-sm text-ink-500 dark:text-ink-400 line-clamp-2">{getDescription(post)}</p>
                     </div>
                   </Link>
                 </motion.div>

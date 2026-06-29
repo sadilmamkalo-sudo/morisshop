@@ -5,8 +5,8 @@ import { useI18n } from '../context/I18nContext';
 import toast from 'react-hot-toast';
 import { motion } from 'framer-motion';
 
-const priorityColors = { low: 'bg-gray-100 text-gray-600 dark:bg-gray-700 dark:text-gray-300', medium: 'bg-yellow-100 text-yellow-700 dark:bg-yellow-900/50 dark:text-yellow-300', high: 'bg-red-100 text-red-700 dark:bg-red-900/50 dark:text-red-300' };
-const statusColors = { open: 'bg-green-100 text-green-700 dark:bg-green-900/50 dark:text-green-300', closed: 'bg-gray-100 text-gray-600 dark:bg-gray-700 dark:text-gray-300' };
+const priorityColors = { low: 'bg-ink-50 text-ink-600 dark:bg-ink-700 dark:text-ink-300', medium: 'bg-yellow-100 text-yellow-700 dark:bg-yellow-900/50 dark:text-yellow-300', high: 'bg-red-100 text-red-700 dark:bg-red-900/50 dark:text-red-300' };
+const statusColors = { open: 'bg-green-100 text-green-700 dark:bg-green-900/50 dark:text-green-300', closed: 'bg-ink-50 text-ink-600 dark:bg-ink-700 dark:text-ink-300' };
 
 export default function Tickets() {
   const [tickets, setTickets] = useState([]);
@@ -47,23 +47,23 @@ export default function Tickets() {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-moris-50 via-yellow-50 to-orange-50 dark:from-dark-950 dark:via-dark-900 dark:to-dark-950 py-24">
+    <div className="min-h-screen bg-orange-50 dark:from-ink-950 dark:via-ink-900 dark:to-ink-950 py-24">
       <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
         <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }}>
           <div className="flex items-center justify-between mb-10">
-            <h1 className="text-4xl font-bold font-display text-gradient flex items-center gap-3">
-              <span className="w-1 h-8 bg-gradient-to-b from-moris-500 to-orange-500 rounded-full inline-block"></span>
+            <h1 className="text-4xl font-bold font-display  flex items-center gap-3">
+              <span className="w-1 h-8 bg-clay-500 rounded-full inline-block"></span>
               {t('ticket.title')}
             </h1>
             <button onClick={() => setShowForm(!showForm)} className="btn-primary">{t('ticket.newTicket')}</button>
           </div>
 
           {showForm && (
-            <motion.form initial={{ opacity: 0, height: 0 }} animate={{ opacity: 1, height: 'auto' }} onSubmit={handleSubmit} className="card-solid p-6 mb-8">
+            <motion.form initial={{ opacity: 0, height: 0 }} animate={{ opacity: 1, height: 'auto' }} onSubmit={handleSubmit} className="card p-6 mb-8">
               <h2 className="font-bold text-lg mb-4">{t('ticket.newTicket')}</h2>
-              <input type="text" value={form.subject} onChange={e => setForm({ ...form, subject: e.target.value })} placeholder={t('ticket.subject')} className="input-field mb-4" required />
-              <textarea value={form.message} onChange={e => setForm({ ...form, message: e.target.value })} placeholder={t('ticket.message')} className="input-field mb-4 h-24" required />
-              <select value={form.priority} onChange={e => setForm({ ...form, priority: e.target.value })} className="input-field mb-4">
+              <input type="text" value={form.subject} onChange={e => setForm({ ...form, subject: e.target.value })} placeholder={t('ticket.subject')} className="input mb-4" required />
+              <textarea value={form.message} onChange={e => setForm({ ...form, message: e.target.value })} placeholder={t('ticket.message')} className="input mb-4 h-24" required />
+              <select value={form.priority} onChange={e => setForm({ ...form, priority: e.target.value })} className="input mb-4">
                 <option value="low">{t('ticket.low')}</option>
                 <option value="medium">{t('ticket.medium')}</option>
                 <option value="high">{t('ticket.high')}</option>
@@ -74,15 +74,15 @@ export default function Tickets() {
 
           <div className="space-y-4">
             {tickets.map((ticket, i) => (
-              <motion.div key={ticket._id} initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: i * 0.05 }} className="card-solid p-6">
+              <motion.div key={ticket._id} initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: i * 0.05 }} className="card p-6">
                 <div className="flex items-center justify-between mb-4">
                   <div className="flex items-center gap-3">
-                    <div className={`w-10 h-10 rounded-2xl flex items-center justify-center font-bold text-sm ${ticket.priority === 'high' ? 'bg-red-100 text-red-600' : ticket.priority === 'medium' ? 'bg-yellow-100 text-yellow-600' : 'bg-gray-100 text-gray-600'}`}>
+                    <div className={`w-10 h-10 rounded flex items-center justify-center font-bold text-sm ${ticket.priority === 'high' ? 'bg-red-100 text-red-600' : ticket.priority === 'medium' ? 'bg-yellow-100 text-yellow-600' : 'bg-ink-50 text-ink-600'}`}>
                       {ticket.subject[0]?.toUpperCase()}
                     </div>
                     <div>
                       <h3 className="font-semibold">{ticket.subject}</h3>
-                      <p className="text-sm text-gray-500">{new Date(ticket.createdAt).toLocaleDateString('fr-FR')}</p>
+                      <p className="text-sm text-ink-500">{new Date(ticket.createdAt).toLocaleDateString('fr-FR')}</p>
                     </div>
                   </div>
                   <div className="flex gap-2">
@@ -91,11 +91,11 @@ export default function Tickets() {
                   </div>
                 </div>
 
-                <p className="text-gray-600 dark:text-gray-300 mb-4">{ticket.message}</p>
+                <p className="text-ink-600 dark:text-ink-300 mb-4">{ticket.message}</p>
 
                 {ticket.responses?.map((r, j) => (
-                  <div key={j} className={`p-4 rounded-2xl mb-3 ${r.isAdmin ? 'bg-moris-50 dark:bg-moris-500/5 border border-moris-200/50 dark:border-moris-700/30 ml-8' : 'bg-gray-50 dark:bg-dark-800/50 mr-8'}`}>
-                    <p className="text-xs text-gray-500 mb-1"><strong>{r.isAdmin ? '🛡️ Support' : '👤 ' + (user?.name || 'You')}</strong> · {new Date(r.createdAt).toLocaleString('fr-FR')}</p>
+                  <div key={j} className={`p-4 rounded mb-3 ${r.isAdmin ? 'bg-clay-50 dark:bg-clay-500/5 border border-clay-200/50 dark:border-clay-700/30 ml-8' : 'bg-ink-50 dark:bg-ink-800/50 mr-8'}`}>
+                    <p className="text-xs text-ink-500 mb-1"><strong>{(r.isAdmin ? ' Support' : ' ' + (user?.name || 'You'))}</strong> · {new Date(r.createdAt).toLocaleString('fr-FR')}</p>
                     <p className="text-sm">{r.message}</p>
                   </div>
                 ))}
@@ -104,21 +104,21 @@ export default function Tickets() {
                   <div className="mt-4">
                     {replyingTo === ticket._id ? (
                       <div className="flex gap-2">
-                        <input type="text" value={reply} onChange={e => setReply(e.target.value)} placeholder={t('ticket.respond')} className="input-field flex-1" />
+                        <input type="text" value={reply} onChange={e => setReply(e.target.value)} placeholder={t('ticket.respond')} className="input flex-1" />
                         <button onClick={() => handleReply(ticket._id)} className="btn-primary py-2 text-sm">{t('ticket.respond')}</button>
-                        <button onClick={() => { setReplyingTo(null); setReply(''); }} className="px-3 py-2 text-sm text-gray-500 hover:underline">✕</button>
+                        <button onClick={() => { setReplyingTo(null); setReply(''); }} className="px-3 py-2 text-sm text-ink-500 hover:underline"></button>
                       </div>
                     ) : (
-                      <button onClick={() => setReplyingTo(ticket._id)} className="text-moris-500 hover:underline text-sm">{t('ticket.respond')}</button>
+                      <button onClick={() => setReplyingTo(ticket._id)} className="text-clay-500 hover:underline text-sm">{t('ticket.respond')}</button>
                     )}
                   </div>
                 )}
               </motion.div>
             ))}
             {tickets.length === 0 && (
-              <div className="card-solid text-center py-16">
-                <div className="text-6xl mb-4">🎫</div>
-                <p className="text-gray-500">{t('ticket.noTickets')}</p>
+              <div className="card text-center py-16">
+                <div className="text-6xl mb-4"></div>
+                <p className="text-ink-500">{t('ticket.noTickets')}</p>
               </div>
             )}
           </div>

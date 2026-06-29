@@ -84,12 +84,7 @@
   .badge-sale { @apply bg-clay-500 text-white; }
   .badge-success { @apply bg-green-700 text-white; }
 
-  /* backward compatibility aliases */
-  .card-solid { @apply card; }
-  .input-field { @apply input; }
-  .text-gradient { color: inherit; }
-  .section-title { @apply section-heading; }
-  .section-subtitle { @apply section-sub; }
+
 
   .section-heading {
     @apply text-3xl md:text-4xl font-display text-ink-900 dark:text-white;

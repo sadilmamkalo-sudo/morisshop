@@ -24,40 +24,40 @@ export default function Register() {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center px-4 py-20 bg-gradient-to-br from-moris-50 via-yellow-50 to-orange-50 dark:from-dark-950 dark:via-dark-900 dark:to-dark-950">
+    <div className="min-h-screen flex items-center justify-center px-4 py-20 bg-orange-50 dark:from-ink-950 dark:via-ink-900 dark:to-ink-950">
       <motion.div initial={{ opacity: 0, scale: 0.95 }} animate={{ opacity: 1, scale: 1 }} transition={{ duration: 0.4 }} className="w-full max-w-md">
-        <div className="glass-card p-8 md:p-10">
+        <div className=" p-8 md:p-10">
           <div className="text-center mb-8">
-            <div className="w-16 h-16 mx-auto mb-4 rounded-2xl bg-gradient-to-br from-moris-500 to-orange-500 flex items-center justify-center shadow-lg shadow-moris-500/30">
+            <div className="w-16 h-16 mx-auto mb-4 rounded bg-clay-500 flex items-center justify-center shadow-sm shadow-clay-500/30">
               <span className="text-3xl font-bold text-white">M</span>
             </div>
-            <h1 className="text-3xl font-bold font-display text-gradient">{t('auth.register')}</h1>
-            <p className="text-gray-500 dark:text-gray-400 mt-2">Create your {siteName} account</p>
+            <h1 className="text-3xl font-bold font-display ">{t('auth.register')}</h1>
+            <p className="text-ink-500 dark:text-ink-400 mt-2">Create your {siteName} account</p>
           </div>
 
           <form onSubmit={handleSubmit} className="space-y-4">
             <div>
               <label className="block text-sm font-medium mb-2">{t('auth.name')}</label>
-              <input type="text" value={form.name} onChange={e => setForm({ ...form, name: e.target.value })} placeholder="John Doe" className="input-field" required />
+              <input type="text" value={form.name} onChange={e => setForm({ ...form, name: e.target.value })} placeholder="John Doe" className="input" required />
             </div>
             <div>
               <label className="block text-sm font-medium mb-2">{t('auth.email')}</label>
-              <input type="email" value={form.email} onChange={e => setForm({ ...form, email: e.target.value })} placeholder="email@example.com" className="input-field" required />
+              <input type="email" value={form.email} onChange={e => setForm({ ...form, email: e.target.value })} placeholder="email@example.com" className="input" required />
             </div>
             <div>
               <label className="block text-sm font-medium mb-2">{t('auth.phone')}</label>
-              <input type="tel" value={form.phone} onChange={e => setForm({ ...form, phone: e.target.value })} placeholder="+212 6XXXXXXXX" className="input-field" />
+              <input type="tel" value={form.phone} onChange={e => setForm({ ...form, phone: e.target.value })} placeholder="+212 6XXXXXXXX" className="input" />
             </div>
             <div>
               <label className="block text-sm font-medium mb-2">{t('auth.password')}</label>
-              <input type="password" value={form.password} onChange={e => setForm({ ...form, password: e.target.value })} placeholder="•••••••• (min 6 characters)" className="input-field" required minLength={6} />
+              <input type="password" value={form.password} onChange={e => setForm({ ...form, password: e.target.value })} placeholder="•••••••• (min 6 characters)" className="input" required minLength={6} />
             </div>
             <button type="submit" className="btn-primary w-full text-lg">{t('auth.register')}</button>
           </form>
 
-          <p className="text-center mt-6 text-gray-500 dark:text-gray-400">
+          <p className="text-center mt-6 text-ink-500 dark:text-ink-400">
             {t('auth.haveAccount')}{' '}
-            <Link to="/login" className="text-moris-500 hover:underline font-semibold">{t('auth.login')}</Link>
+            <Link to="/login" className="text-clay-500 hover:underline font-semibold">{t('auth.login')}</Link>
           </p>
         </div>
       </motion.div>

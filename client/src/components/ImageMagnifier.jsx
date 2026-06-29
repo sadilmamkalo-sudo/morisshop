@@ -13,7 +13,7 @@ export default function ImageMagnifier({ src, alt, zoomLevel = 2 }) {
   };
 
   return (
-    <div className="relative overflow-hidden rounded-2xl bg-white dark:bg-dark-800"
+    <div className="relative overflow-hidden rounded bg-white dark:bg-ink-800"
       onMouseEnter={() => setShow(true)} onMouseLeave={() => setShow(false)} onMouseMove={handleMouseMove}>
       <img ref={imgRef} src={src} alt={alt} loading="lazy" className="w-full h-full object-cover" />
       {show && (

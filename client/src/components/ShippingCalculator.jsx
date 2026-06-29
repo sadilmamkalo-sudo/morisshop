@@ -23,28 +23,28 @@ export default function ShippingCalculator({ orderTotal = 0, onResult }) {
   };
 
   return (
-    <div className="card-solid p-6">
+    <div className="card p-6">
       <h3 className="text-lg font-bold mb-4 flex items-center gap-2">
-        <svg className="w-5 h-5 text-moris-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 16V6a1 1 0 00-1-1H4a1 1 0 00-1 1v10l2-1m4-1l2 1 2-1m-8 4h8a2 2 0 002-2v-4a2 2 0 00-2-2H6a2 2 0 00-2 2v4a2 2 0 002 2z" /></svg>
+        <svg className="w-5 h-5 text-clay-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 16V6a1 1 0 00-1-1H4a1 1 0 00-1 1v10l2-1m4-1l2 1 2-1m-8 4h8a2 2 0 002-2v-4a2 2 0 00-2-2H6a2 2 0 00-2 2v4a2 2 0 002 2z" /></svg>
         Shipping Calculator
       </h3>
       <form onSubmit={handleSubmit} className="space-y-3">
-        <select value={city} onChange={e => setCity(e.target.value)} className="input-field" required>
+        <select value={city} onChange={e => setCity(e.target.value)} className="input" required>
           <option value="">Select city</option>
           {cities.map(c => <option key={c} value={c}>{c}</option>)}
         </select>
-        <input type="number" value={weight} onChange={e => setWeight(e.target.value)} placeholder="Weight (kg) - optional" className="input-field" />
+        <input type="number" value={weight} onChange={e => setWeight(e.target.value)} placeholder="Weight (kg) - optional" className="input" />
         <button type="submit" disabled={loading} className="btn-primary w-full">{loading ? 'Calculating...' : 'Calculate Shipping'}</button>
       </form>
       {result && (
-        <motion.div initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} className="mt-4 p-4 bg-gradient-to-br from-emerald-50 to-green-50 dark:from-emerald-900/20 dark:to-green-900/20 rounded-2xl border border-emerald-200 dark:border-emerald-700/30">
+        <motion.div initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} className="mt-4 p-4 bg-emerald-50 dark:bg-emerald-900/20 rounded border border-emerald-200 dark:border-emerald-700/30">
           <div className="flex items-center justify-between mb-2">
-            <span className="text-sm text-gray-500">Shipping Cost</span>
+            <span className="text-sm text-ink-500">Shipping Cost</span>
             <span className="text-2xl font-bold text-emerald-500">{result.cost} DH</span>
           </div>
           {result.estimatedDays && (
             <div className="flex items-center justify-between">
-              <span className="text-sm text-gray-500">Estimated Delivery</span>
+              <span className="text-sm text-ink-500">Estimated Delivery</span>
               <span className="font-semibold">{result.estimatedDays} days</span>
             </div>
           )}

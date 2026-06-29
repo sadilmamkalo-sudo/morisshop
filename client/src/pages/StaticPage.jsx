@@ -14,18 +14,18 @@ export default function StaticPage() {
     window.scrollTo(0, 0);
   }, [slug]);
 
-  if (!page) return <div className="flex items-center justify-center h-96"><div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-moris-500"></div></div>;
+  if (!page) return <div className="flex items-center justify-center h-96"><div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-clay-500"></div></div>;
 
   const title = page.title?.[lang] || page.title?.en || page.title || '';
   const content = page.content?.[lang] || page.content?.en || page.content || '';
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-moris-50 via-yellow-50 to-orange-50 dark:from-dark-950 dark:via-dark-900 dark:to-dark-950 py-24">
+    <div className="min-h-screen bg-orange-50 dark:from-ink-950 dark:via-ink-900 dark:to-ink-950 py-24">
       <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
         <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }}>
-          <article className="card-solid p-6 md:p-10">
-            <h1 className="text-3xl md:text-4xl font-bold font-display text-gradient mb-6">{title}</h1>
-            <div className="prose prose-gray dark:prose-invert max-w-none leading-relaxed text-gray-600 dark:text-gray-300 whitespace-pre-wrap">{content}</div>
+          <article className="card p-6 md:p-10">
+            <h1 className="text-3xl md:text-4xl font-bold font-display  mb-6">{title}</h1>
+            <div className="prose prose-gray dark:prose-invert max-w-none leading-relaxed text-ink-600 dark:text-ink-300 whitespace-pre-wrap">{content}</div>
           </article>
         </motion.div>
       </div>

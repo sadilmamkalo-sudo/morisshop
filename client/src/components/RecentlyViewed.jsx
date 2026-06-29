@@ -13,7 +13,7 @@ export default function RecentlyViewed() {
 
   return (
     <section className="mt-8">
-      <h3 className="section-title mb-4">Recently Viewed</h3>
+      <h3 className="section-heading mb-4">Recently Viewed</h3>
       <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-3">
         {products.map(p => <ProductCard key={p._id} product={p} />)}
       </div>
