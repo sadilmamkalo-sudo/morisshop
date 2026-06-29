@@ -16,7 +16,7 @@ export default function Wishlist() {
   }, []);
 
   return (
-    <div className="min-h-screen bg-clay-50 dark:bg-ink-950 py-24">
+    <div className="min-h-screen bg-sand-50 dark:bg-ink-950 py-24">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }}>
           <h1 className="text-4xl font-bold font-display mb-10 flex items-center gap-3">

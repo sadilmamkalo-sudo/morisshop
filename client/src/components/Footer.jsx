@@ -13,7 +13,7 @@ export default function Footer() {
             <Link to="/" className="text-lg font-display text-ink-900 dark:text-white">
               {siteName}
             </Link>
-            <p className="text-sm text-ink-500 dark:text-ink-400 mt-4 max-w-xs leading-relaxed">
+            <p className="text-sm text-ink-500 dark:text-ink-400 mt-4 max-w-full sm:max-w-xs leading-relaxed">
               {t('footer.description')}
             </p>
           </div>

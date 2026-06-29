@@ -33,7 +33,7 @@ export default function Home() {
               <p className="text-sm font-medium text-clay-500 dark:text-clay-400 uppercase tracking-[0.2em] mb-6">
                 {siteName}
               </p>
-              <h1 className="text-5xl md:text-7xl lg:text-8xl font-display text-ink-900 dark:text-white leading-[1.1] mb-8 text-balance">
+              <h1 className="text-4xl sm:text-5xl md:text-7xl lg:text-8xl font-display text-ink-900 dark:text-white leading-[1.1] mb-8 text-balance">
                 {t('home.heroTitle')}
               </h1>
               <p className="text-base text-ink-500 dark:text-ink-400 leading-relaxed max-w-md mb-10">

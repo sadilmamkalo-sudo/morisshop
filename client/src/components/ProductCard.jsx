@@ -65,14 +65,14 @@ export default function ProductCard({ product, index = 0 }) {
 
           <button
             onClick={handleWishlist}
-            className="absolute top-4 right-4 w-8 h-8 bg-white/90 dark:bg-ink-900/90 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300"
+            className="absolute top-4 right-4 w-10 h-10 bg-white/90 dark:bg-ink-900/90 flex items-center justify-center transition-opacity duration-300 opacity-100 md:opacity-0 md:group-hover:opacity-100"
           >
             <svg className={`w-4 h-4 ${user?.wishlist?.includes(product._id) ? 'text-clay-500 fill-clay-500' : 'text-ink-700 dark:text-ink-300'}`} fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
             </svg>
           </button>
 
-          <div className="absolute bottom-0 left-0 right-0 p-4 translate-y-full group-hover:translate-y-0 transition-transform duration-300">
+          <div className="absolute bottom-0 left-0 right-0 p-4 translate-y-0 md:translate-y-full md:group-hover:translate-y-0 transition-transform duration-300">
             <button
               onClick={(e) => { e.preventDefault(); addToCart(product); }}
               className="w-full py-3 bg-white dark:bg-ink-900 text-ink-900 dark:text-white text-xs font-medium uppercase tracking-wider hover:bg-ink-50 dark:hover:bg-ink-800 transition-colors"

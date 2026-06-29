@@ -51,12 +51,12 @@ export default function ProductDetail() {
   };
 
   return (
-    <div className="min-h-screen bg-clay-50 dark:bg-ink-950 py-24">
+    <div className="min-h-screen bg-sand-50 dark:bg-ink-950 py-24">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} className="grid md:grid-cols-2 gap-12">
           <div className="space-y-4">
             <div className="relative overflow-hidden p-2">
-              <div className="h-96 rounded overflow-hidden">
+              <div className="max-h-[50vh] md:h-96 rounded overflow-hidden">
                 {product.images?.[activeImg] ? (
                   <ImageMagnifier src={product.images[activeImg]} alt={name} zoomLevel={2.5} />
                 ) : (
@@ -68,9 +68,9 @@ export default function ProductDetail() {
               )}
             </div>
             {product.images?.length > 1 && (
-              <div className="flex gap-3">
+              <div className="flex gap-3 overflow-x-auto pb-2">
                 {product.images.map((img, i) => (
-                  <button key={i} onClick={() => setActiveImg(i)} className={`w-20 h-20 rounded overflow-hidden border-2 transition-all duration-300 ${i === activeImg ? 'border-clay-500 shadow-sm' : 'border-ink-200 opacity-70 hover:opacity-100'}`}>
+                  <button key={i} onClick={() => setActiveImg(i)} className={`w-20 h-20 shrink-0 rounded overflow-hidden border-2 transition-all duration-300 ${i === activeImg ? 'border-clay-500 shadow-sm' : 'border-ink-200 opacity-70 hover:opacity-100'}`}>
                     <img src={img} alt="" className="w-full h-full object-cover" />
                   </button>
                 ))}

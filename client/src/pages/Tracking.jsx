@@ -162,7 +162,7 @@ export default function Tracking() {
                           }`}>
                             {i + 1}
                           </div>
-                          <span className={`text-[10px] mt-1 text-center font-medium ${
+                          <span className={`text-[11px] md:text-xs mt-1 text-center font-medium leading-tight ${
                             i <= currentStepIndex ? 'text-clay-600 dark:text-clay-400' : 'text-ink-400'
                           }`}>
                             {t(`order.${step}`)}

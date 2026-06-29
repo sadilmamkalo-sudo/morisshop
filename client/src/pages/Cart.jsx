@@ -27,7 +27,7 @@ export default function Cart() {
 
   if (cart.length === 0) {
     return (
-      <div className="min-h-screen flex items-center justify-center px-4 bg-clay-50 dark:bg-ink-950">
+      <div className="min-h-screen flex items-center justify-center px-4 bg-sand-50 dark:bg-ink-950">
         <div className="text-center">
           <h2 className="text-3xl font-bold font-display mb-4">{t('cart.empty')}</h2>
           <p className="text-ink-500 mb-8">Votre panier est vide, decouvrez nos produits</p>
@@ -48,24 +48,24 @@ export default function Cart() {
         <div className="lg:col-span-2 space-y-5">
           {cart.map((item, i) => (
             <motion.div key={item._id} initial={{ opacity: 0, x: -20 }} animate={{ opacity: 1, x: 0 }} transition={{ delay: i * 0.05 }}
-              className="card p-5 flex items-center gap-5">
-              <div className="w-24 h-24 rounded bg-ink-50 dark:bg-ink-700 overflow-hidden shrink-0">
+              className="card p-4 md:p-5 flex flex-col sm:flex-row items-start sm:items-center gap-4">
+              <div className="w-full sm:w-24 h-24 rounded bg-ink-50 dark:bg-ink-700 overflow-hidden shrink-0">
                 {item.images?.[0] ? <img src={item.images[0]} alt={getLocalizedName(item)} loading="lazy" className="w-full h-full object-cover" /> : <div className="flex items-center justify-center h-full">
                   <svg className="w-8 h-8 text-ink-300" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4" /></svg>
                 </div>}
               </div>
-              <div className="flex-1 min-w-0">
-                <Link to={`/shop/${item._id}`} className="font-bold text-lg hover:text-clay-500 transition-colors block truncate">{getLocalizedName(item)}</Link>
-                <p className="text-2xl font-bold text-clay-500 mt-1">{item.price} <span className="text-sm">DH</span></p>
+              <div className="flex-1 min-w-0 w-full">
+                <Link to={`/shop/${item._id}`} className="font-bold text-base md:text-lg hover:text-clay-500 transition-colors block truncate">{getLocalizedName(item)}</Link>
+                <p className="text-xl md:text-2xl font-bold text-clay-500 mt-1">{item.price} <span className="text-sm">DH</span></p>
               </div>
-              <div className="flex items-center gap-3">
-                <div className="flex items-center bg-ink-50 dark:bg-ink-700 rounded overflow-hidden">
+              <div className="flex items-center gap-3 w-full sm:w-auto justify-between sm:justify-end">
+                <div className="flex items-center bg-ink-50 dark:bg-ink-700 overflow-hidden">
                   <button onClick={() => updateQuantity(item._id, item.quantity - 1)} className="w-10 h-10 flex items-center justify-center font-bold hover:bg-ink-200 dark:hover:bg-ink-600 transition-colors">-</button>
                   <span className="w-10 text-center font-bold">{item.quantity}</span>
                   <button onClick={() => updateQuantity(item._id, item.quantity + 1)} className="w-10 h-10 flex items-center justify-center font-bold hover:bg-ink-200 dark:hover:bg-ink-600 transition-colors">+</button>
                 </div>
                 <div className="text-right min-w-[80px]">
-                  <p className="font-bold text-lg">{(item.price * item.quantity).toFixed(2)} <span className="text-sm">DH</span></p>
+                  <p className="font-bold text-base md:text-lg">{(item.price * item.quantity).toFixed(2)} <span className="text-sm">DH</span></p>
                   <button onClick={() => removeFromCart(item._id)} className="text-red-500 text-sm hover:underline">{t('cart.remove')}</button>
                 </div>
               </div>

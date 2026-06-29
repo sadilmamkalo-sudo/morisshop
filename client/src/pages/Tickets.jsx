@@ -47,11 +47,11 @@ export default function Tickets() {
   };
 
   return (
-    <div className="min-h-screen bg-orange-50 dark:from-ink-950 dark:via-ink-900 dark:to-ink-950 py-24">
+    <div className="min-h-screen bg-sand-50 dark:bg-ink-950 py-24">
       <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
         <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }}>
-          <div className="flex items-center justify-between mb-10">
-            <h1 className="text-4xl font-bold font-display  flex items-center gap-3">
+          <div className="flex flex-wrap items-center justify-between gap-4 mb-10">
+            <h1 className="text-3xl md:text-4xl font-bold font-display flex items-center gap-3">
               <span className="w-1 h-8 bg-clay-500 rounded-full inline-block"></span>
               {t('ticket.title')}
             </h1>
@@ -85,7 +85,7 @@ export default function Tickets() {
                       <p className="text-sm text-ink-500">{new Date(ticket.createdAt).toLocaleDateString('fr-FR')}</p>
                     </div>
                   </div>
-                  <div className="flex gap-2">
+                  <div className="flex flex-wrap gap-2">
                     <span className={`px-3 py-1 rounded-full text-xs font-semibold ${priorityColors[ticket.priority]}`}>{t(`ticket.${ticket.priority}`)}</span>
                     <span className={`px-3 py-1 rounded-full text-xs font-semibold ${statusColors[ticket.status]}`}>{t(`ticket.${ticket.status}`)}</span>
                   </div>
@@ -94,7 +94,7 @@ export default function Tickets() {
                 <p className="text-ink-600 dark:text-ink-300 mb-4">{ticket.message}</p>
 
                 {ticket.responses?.map((r, j) => (
-                  <div key={j} className={`p-4 rounded mb-3 ${r.isAdmin ? 'bg-clay-50 dark:bg-clay-500/5 border border-clay-200/50 dark:border-clay-700/30 ml-8' : 'bg-ink-50 dark:bg-ink-800/50 mr-8'}`}>
+                  <div key={j} className={`p-4 rounded mb-3 ${r.isAdmin ? 'bg-clay-50 dark:bg-clay-500/5 border border-clay-200/50 dark:border-clay-700/30 ml-4 sm:ml-8' : 'bg-ink-50 dark:bg-ink-800/50 mr-4 sm:mr-8'}`}>
                     <p className="text-xs text-ink-500 mb-1"><strong>{(r.isAdmin ? ' Support' : ' ' + (user?.name || 'You'))}</strong> · {new Date(r.createdAt).toLocaleString('fr-FR')}</p>
                     <p className="text-sm">{r.message}</p>
                   </div>
@@ -103,10 +103,10 @@ export default function Tickets() {
                 {ticket.status === 'open' && (
                   <div className="mt-4">
                     {replyingTo === ticket._id ? (
-                      <div className="flex gap-2">
-                        <input type="text" value={reply} onChange={e => setReply(e.target.value)} placeholder={t('ticket.respond')} className="input flex-1" />
-                        <button onClick={() => handleReply(ticket._id)} className="btn-primary py-2 text-sm">{t('ticket.respond')}</button>
-                        <button onClick={() => { setReplyingTo(null); setReply(''); }} className="px-3 py-2 text-sm text-ink-500 hover:underline"></button>
+                      <div className="flex gap-2 flex-wrap">
+                        <input type="text" value={reply} onChange={e => setReply(e.target.value)} placeholder={t('ticket.respond')} className="input flex-1 min-w-[140px]" />
+                        <button onClick={() => handleReply(ticket._id)} className="btn-primary px-5 py-3 text-sm">{t('ticket.respond')}</button>
+                        <button onClick={() => { setReplyingTo(null); setReply(''); }} className="px-4 py-3 text-sm text-ink-500 hover:underline border border-ink-200 dark:border-ink-700 rounded">{t('common.cancel')}</button>
                       </div>
                     ) : (
                       <button onClick={() => setReplyingTo(ticket._id)} className="text-clay-500 hover:underline text-sm">{t('ticket.respond')}</button>

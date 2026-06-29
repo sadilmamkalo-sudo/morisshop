@@ -95,7 +95,7 @@ export default function Profile() {
                 <input type="email" value={form.email} onChange={e => setForm({ ...form, email: e.target.value })} placeholder={t('auth.email')} className="input" required />
                 <input type="tel" value={form.phone} onChange={e => setForm({ ...form, phone: e.target.value })} placeholder={t('auth.phone')} className="input" />
                 <input type="text" value={form.street} onChange={e => setForm({ ...form, street: e.target.value })} placeholder={t('profile.street')} className="input" />
-                <div className="grid grid-cols-2 gap-4">
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                   <input type="text" value={form.city} onChange={e => setForm({ ...form, city: e.target.value })} placeholder={t('profile.city')} className="input" />
                   <input type="text" value={form.zip} onChange={e => setForm({ ...form, zip: e.target.value })} placeholder={t('profile.zip')} className="input" />
                 </div>
