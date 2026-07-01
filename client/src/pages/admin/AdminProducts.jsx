@@ -9,19 +9,25 @@ export default function AdminProducts() {
  const [editing, setEditing] = useState(null);
  const [form, setForm] = useState({ name: { ar: '', fr: '', en: '' }, description: { ar: '', fr: '', en: '' }, price: '', oldPrice: '', category: '', stock: '', images: '', isFeatured: false, tags: '', variants: [] });
  const [uploading, setUploading] = useState(false);
+ const [categories, setCategories] = useState([]);
+ const [newCategory, setNewCategory] = useState('');
  const { t } = useI18n();
  const fetchProducts = () => { axios.get('/api/products?limit=100').then(res => setProducts(res.data.products || [])).catch(() => {}); };
- useEffect(() => { fetchProducts(); }, []);
- const resetForm = () => setForm({ name: { ar: '', fr: '', en: '' }, description: { ar: '', fr: '', en: '' }, price: '', oldPrice: '', category: '', stock: '', images: '', isFeatured: false, tags: '', variants: [] });
+ const fetchCategories = () => { axios.get('/api/categories').then(res => setCategories(res.data || [])).catch(() => {}); };
+ useEffect(() => { fetchProducts(); fetchCategories(); }, []);
+ const resetForm = () => { setForm({ name: { ar: '', fr: '', en: '' }, description: { ar: '', fr: '', en: '' }, price: '', oldPrice: '', category: '', stock: '', images: '', isFeatured: false, tags: '', variants: [] }); setNewCategory(''); };
   const handleEdit = (p) => {
   const name = typeof p.name === 'object' && p.name ? p.name : { ar: p.name || '', fr: p.name || '', en: p.name || '' };
   const desc = typeof p.description === 'object' && p.description ? p.description : { ar: p.description || '', fr: p.description || '', en: p.description || '' };
   setForm({ name, description: desc, price: p.price, oldPrice: p.oldPrice || '', category: p.category, stock: p.stock, images: p.images?.join(', ') || '', isFeatured: p.isFeatured, tags: p.tags?.join(', ') || '', variants: p.variants || [] });
+  setNewCategory('');
   setEditing(p._id); setShowForm(true);
   };
  const handleImageUpload = async (e) => {
  const files = e.target.files;
  if (!files.length) return;
+ if (files.length > 20) { toast.error('Max 20 images at once'); e.target.value = ''; return; }
+ for (const f of files) { if (f.size > 5 * 1024 * 1024) { toast.error(`"${f.name}" is too large (max 5MB)`); e.target.value = ''; return; } }
  setUploading(true);
  try {
  const token = localStorage.getItem('token');
@@ -84,7 +90,13 @@ export default function AdminProducts() {
  <div className="grid md:grid-cols-4 gap-4 mb-4">
  <div><label className="block text-sm font-medium mb-1">Price (DH)</label><input type="number" value={form.price} onChange={e => setForm({ ...form, price: e.target.value })} className="input" required /></div>
  <div><label className="block text-sm font-medium mb-1">Old Price</label><input type="number" value={form.oldPrice} onChange={e => setForm({ ...form, oldPrice: e.target.value })} className="input" /></div>
- <div><label className="block text-sm font-medium mb-1">Category</label><input value={form.category} onChange={e => setForm({ ...form, category: e.target.value })} className="input" required /></div>
+  <div><label className="block text-sm font-medium mb-1">Category</label>
+  <select value={categories.includes(form.category) ? form.category : ''} onChange={e => setForm({ ...form, category: e.target.value })} className="input" required={!form.category}>
+  <option value="">{form.category && !categories.includes(form.category) ? form.category : 'Select or type new'}</option>
+  {categories.map(c => <option key={c} value={c}>{c}</option>)}
+  </select>
+  {!categories.includes(form.category) && form.category !== '' && <p className="text-xs text-clay-500 mt-1">New category will be created</p>}
+  </div>
  <div><label className="block text-sm font-medium mb-1">Stock</label><input type="number" value={form.stock} onChange={e => setForm({ ...form, stock: e.target.value })} className="input" required /></div>
  </div>
  <div className="mb-4">

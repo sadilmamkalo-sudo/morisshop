@@ -26,46 +26,42 @@ const fileFilter = (req, file, cb) => {
 
 const upload = multer({ storage, fileFilter, limits: { fileSize: 5 * 1024 * 1024 } });
 
-router.post('/', protect, adminOnly, upload.array('images', 10), (req, res) => {
-  try {
-    const files = req.files.map(f => `/uploads/${f.filename}`);
-    res.json({ images: files, message: 'Upload successful' });
-  } catch (err) {
-    res.status(500).json({ message: err.message });
-  }
+const handleMulter = (mw) => (req, res, next) => {
+  mw(req, res, (err) => {
+    if (err instanceof multer.MulterError) {
+      if (err.code === 'LIMIT_FILE_SIZE') return res.status(400).json({ message: 'Image too large (max 5MB each)' });
+      if (err.code === 'LIMIT_UNEXPECTED_FILE') return res.status(400).json({ message: 'Too many files at once (max 20)' });
+      return res.status(400).json({ message: err.message });
+    }
+    if (err) return res.status(400).json({ message: err.message });
+    next();
+  });
+};
+
+router.post('/', protect, adminOnly, handleMulter(upload.array('images', 20)), (req, res) => {
+  const files = req.files.map(f => `/uploads/${f.filename}`);
+  res.json({ images: files, message: 'Upload successful' });
 });
 
-router.post('/single', protect, adminOnly, upload.single('image'), (req, res) => {
-  try {
-    res.json({ image: `/uploads/${req.file.filename}`, message: 'Upload successful' });
-  } catch (err) {
-    res.status(500).json({ message: err.message });
-  }
+router.post('/single', protect, adminOnly, handleMulter(upload.single('image')), (req, res) => {
+  res.json({ image: `/uploads/${req.file.filename}`, message: 'Upload successful' });
 });
 
-router.post('/optimize', protect, adminOnly, upload.single('image'), async (req, res) => {
-  try {
-    if (!req.file) return res.status(400).json({ message: 'No image uploaded' });
-    const filename = `${Date.now()}-${Math.random().toString(36).slice(2)}.webp`;
-    const outputPath = path.join(uploadDir, filename);
-    await sharp(req.file.path)
-      .resize({ width: 1200, withoutEnlargement: true })
-      .webp({ quality: 80 })
-      .toFile(outputPath);
-    fs.unlinkSync(req.file.path);
-    res.json({ image: `/uploads/${filename}`, message: 'Image optimized' });
-  } catch (err) {
-    res.status(500).json({ message: err.message });
-  }
+router.post('/optimize', protect, adminOnly, handleMulter(upload.single('image')), async (req, res) => {
+  if (!req.file) return res.status(400).json({ message: 'No image uploaded' });
+  const filename = `${Date.now()}-${Math.random().toString(36).slice(2)}.webp`;
+  const outputPath = path.join(uploadDir, filename);
+  await sharp(req.file.path)
+    .resize({ width: 1200, withoutEnlargement: true })
+    .webp({ quality: 80 })
+    .toFile(outputPath);
+  fs.unlinkSync(req.file.path);
+  res.json({ image: `/uploads/${filename}`, message: 'Image optimized' });
 });
 
-router.post('/bulk', protect, adminOnly, upload.array('images', 20), async (req, res) => {
-  try {
-    const files = req.files.map(f => `/uploads/${f.filename}`);
-    res.json({ images: files, message: `${files.length} files uploaded` });
-  } catch (err) {
-    res.status(500).json({ message: err.message });
-  }
+router.post('/bulk', protect, adminOnly, handleMulter(upload.array('images', 20)), async (req, res) => {
+  const files = req.files.map(f => `/uploads/${f.filename}`);
+  res.json({ images: files, message: `${files.length} files uploaded` });
 });
 
 module.exports = router;
