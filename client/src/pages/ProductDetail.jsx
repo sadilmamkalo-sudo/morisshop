@@ -33,8 +33,8 @@ export default function ProductDetail() {
 
   if (!product) return <div className="flex items-center justify-center h-96"><div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-clay-500"></div></div>;
 
-  const name = product.name?.[lang] || product.name?.en;
-  const description = product.description?.[lang] || product.description?.en;
+  const name = product.name?.[lang] || product.name?.en || (typeof product.name === 'string' ? product.name : '');
+  const description = product.description?.[lang] || product.description?.en || (typeof product.description === 'string' ? product.description : '');
   const discount = product.oldPrice && product.oldPrice > product.price ? Math.round(((product.oldPrice - product.price) / product.oldPrice) * 100) : 0;
 
   const handleWishlist = async () => {

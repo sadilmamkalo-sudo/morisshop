@@ -12,7 +12,7 @@ export default function ProductCard({ product, index = 0 }) {
   const { lang, t } = useI18n();
   const navigate = useNavigate();
 
-  const name = product.name?.[lang] || product.name?.en || '';
+  const name = product.name?.[lang] || product.name?.en || (typeof product.name === 'string' ? product.name : '');
   const discount = product.oldPrice && product.oldPrice > product.price
     ? Math.round(((product.oldPrice - product.price) / product.oldPrice) * 100)
     : 0;

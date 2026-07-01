@@ -40,7 +40,10 @@ export default function OrderDetail() {
 
   if (!order) return <div className="flex items-center justify-center h-96"><div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-clay-500"></div></div>;
 
-  const getLocalizedName = (item) => item.product?.name?.[lang] || item.product?.name?.en || 'Unknown';
+  const getLocalizedName = (item) => {
+    const n = item.product?.name || item.name;
+    return n?.[lang] || n?.en || (typeof n === 'string' ? n : 'Unknown');
+  };
   const currentStepIndex = order.status === 'cancelled' ? -1 : STEPS.indexOf(order.status);
 
   const getEstimatedRemaining = () => {
@@ -128,7 +131,7 @@ export default function OrderDetail() {
                         {item.image ? <img src={item.image} alt={getLocalizedName(item)} loading="lazy" className="w-full h-full object-cover" /> : <div className="flex items-center justify-center h-full text-2xl"></div>}
                       </div>
                       <div className="flex-1">
-                        <p className="font-semibold">{item.name?.[lang] || item.name?.en || 'Product'}</p>
+                        <p className="font-semibold">{getLocalizedName(item)}</p>
                         <p className="text-sm text-ink-500">Qty: {item.quantity} x {item.price} DH</p>
                       </div>
                       <span className="font-bold text-clay-500">{(item.price * item.quantity).toFixed(2)} DH</span>

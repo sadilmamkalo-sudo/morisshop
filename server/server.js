@@ -95,6 +95,19 @@ connectDB().then(async () => {
     console.log(`Seeded ${demoProducts.length} demo products`);
   } else {
     console.log(`Found ${productCount} existing products`);
+    const badNames = await Product.countDocuments({ name: { $type: 'string' } });
+    if (badNames > 0) {
+      console.log(`Migrating ${badNames} products with flat string names...`);
+      const allBad = await Product.find({ name: { $type: 'string' } }).lean();
+      for (const p of allBad) {
+        const flatName = (p.name || 'Product').toString();
+        const flatDesc = p.description && typeof p.description === 'object' ? (p.description.en || p.description.ar || p.description.fr || '') : (p.description ? p.description.toString() : '');
+        await Product.updateOne({ _id: p._id }, [
+          { $set: { name: { ar: flatName, fr: flatName, en: flatName }, description: { ar: flatDesc, fr: flatDesc, en: flatDesc } } }
+        ]);
+      }
+      console.log(`Migrated ${badNames} products to multilingual format`);
+    }
   }
 
   const Coupon = require('./models/Coupon');

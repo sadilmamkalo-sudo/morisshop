@@ -43,9 +43,9 @@ export default function Compare() {
 
   const getFieldValue = (product, field) => {
     if (field === 'image') return product.images?.[0];
-    if (field === 'name') return product.name?.[lang] || product.name?.en || '';
+    if (field === 'name') return product.name?.[lang] || product.name?.en || (typeof product.name === 'string' ? product.name : '');
     if (field === 'price') return `${product.price} DH`;
-    if (field === 'description') return product.description?.[lang] || product.description?.en || '';
+    if (field === 'description') return product.description?.[lang] || product.description?.en || (typeof product.description === 'string' ? product.description : '');
     if (field === 'rating') return product.averageRating || product.rating || 0;
     if (field === 'stock') return product.stock > 0 ? 'In Stock' : 'Out of Stock';
     return product[field] || '';

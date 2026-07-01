@@ -13,10 +13,12 @@ export default function AdminProducts() {
  const fetchProducts = () => { axios.get('/api/products?limit=100').then(res => setProducts(res.data.products || [])).catch(() => {}); };
  useEffect(() => { fetchProducts(); }, []);
  const resetForm = () => setForm({ name: { ar: '', fr: '', en: '' }, description: { ar: '', fr: '', en: '' }, price: '', oldPrice: '', category: '', stock: '', images: '', isFeatured: false, tags: '', variants: [] });
- const handleEdit = (p) => {
- setForm({ name: p.name, description: p.description, price: p.price, oldPrice: p.oldPrice || '', category: p.category, stock: p.stock, images: p.images?.join(', ') || '', isFeatured: p.isFeatured, tags: p.tags?.join(', ') || '', variants: p.variants || [] });
- setEditing(p._id); setShowForm(true);
- };
+  const handleEdit = (p) => {
+  const name = typeof p.name === 'object' && p.name ? p.name : { ar: p.name || '', fr: p.name || '', en: p.name || '' };
+  const desc = typeof p.description === 'object' && p.description ? p.description : { ar: p.description || '', fr: p.description || '', en: p.description || '' };
+  setForm({ name, description: desc, price: p.price, oldPrice: p.oldPrice || '', category: p.category, stock: p.stock, images: p.images?.join(', ') || '', isFeatured: p.isFeatured, tags: p.tags?.join(', ') || '', variants: p.variants || [] });
+  setEditing(p._id); setShowForm(true);
+  };
  const handleImageUpload = async (e) => {
  const files = e.target.files;
  if (!files.length) return;
