@@ -11,17 +11,19 @@ export default function AdminProducts() {
  const [uploading, setUploading] = useState(false);
  const [categories, setCategories] = useState([]);
  const [newCategory, setNewCategory] = useState('');
+ const [showNewCatInput, setShowNewCatInput] = useState(false);
  const { t } = useI18n();
  const fetchProducts = () => { axios.get('/api/products?limit=100').then(res => setProducts(res.data.products || [])).catch(() => {}); };
  const fetchCategories = () => { axios.get('/api/categories').then(res => setCategories(res.data || [])).catch(() => {}); };
  useEffect(() => { fetchProducts(); fetchCategories(); }, []);
- const resetForm = () => { setForm({ name: { ar: '', fr: '', en: '' }, description: { ar: '', fr: '', en: '' }, price: '', oldPrice: '', category: '', stock: '', images: '', isFeatured: false, tags: '', variants: [] }); setNewCategory(''); };
-  const handleEdit = (p) => {
-  const name = typeof p.name === 'object' && p.name ? p.name : { ar: p.name || '', fr: p.name || '', en: p.name || '' };
-  const desc = typeof p.description === 'object' && p.description ? p.description : { ar: p.description || '', fr: p.description || '', en: p.description || '' };
-  setForm({ name, description: desc, price: p.price, oldPrice: p.oldPrice || '', category: p.category, stock: p.stock, images: p.images?.join(', ') || '', isFeatured: p.isFeatured, tags: p.tags?.join(', ') || '', variants: p.variants || [] });
-  setNewCategory('');
-  setEditing(p._id); setShowForm(true);
+  const resetForm = () => { setForm({ name: { ar: '', fr: '', en: '' }, description: { ar: '', fr: '', en: '' }, price: '', oldPrice: '', category: '', stock: '', images: '', isFeatured: false, tags: '', variants: [] }); setNewCategory(''); setShowNewCatInput(false); };
+   const handleEdit = (p) => {
+   const name = typeof p.name === 'object' && p.name ? p.name : { ar: p.name || '', fr: p.name || '', en: p.name || '' };
+   const desc = typeof p.description === 'object' && p.description ? p.description : { ar: p.description || '', fr: p.description || '', en: p.description || '' };
+   setForm({ name, description: desc, price: p.price, oldPrice: p.oldPrice || '', category: p.category, stock: p.stock, images: p.images?.join(', ') || '', isFeatured: p.isFeatured, tags: p.tags?.join(', ') || '', variants: p.variants || [] });
+   setNewCategory('');
+   setShowNewCatInput(false);
+   setEditing(p._id); setShowForm(true);
   };
  const handleImageUpload = async (e) => {
  const files = e.target.files;
@@ -91,12 +93,18 @@ export default function AdminProducts() {
  <div><label className="block text-sm font-medium mb-1">Price (DH)</label><input type="number" value={form.price} onChange={e => setForm({ ...form, price: e.target.value })} className="input" required /></div>
  <div><label className="block text-sm font-medium mb-1">Old Price</label><input type="number" value={form.oldPrice} onChange={e => setForm({ ...form, oldPrice: e.target.value })} className="input" /></div>
   <div><label className="block text-sm font-medium mb-1">Category</label>
-  <select value={categories.includes(form.category) ? form.category : ''} onChange={e => setForm({ ...form, category: e.target.value })} className="input" required={!form.category}>
-  <option value="">{form.category && !categories.includes(form.category) ? form.category : 'Select or type new'}</option>
-  {categories.map(c => <option key={c} value={c}>{c}</option>)}
-  </select>
-  {!categories.includes(form.category) && form.category !== '' && <p className="text-xs text-clay-500 mt-1">New category will be created</p>}
-  </div>
+  {showNewCatInput ? (
+    <div className="flex gap-2">
+      <input value={form.category} onChange={e => setForm({ ...form, category: e.target.value })} className="input flex-1" required placeholder="Type new category name" />
+      <button type="button" onClick={() => { setShowNewCatInput(false); setForm(f => ({ ...f, category: '' })); }} className="px-3 py-2 text-sm text-ink-500 hover:bg-ink-100 dark:hover:bg-ink-700 rounded-lg transition-colors">Back</button>
+    </div>
+  ) : (
+    <select value={categories.includes(form.category) ? form.category : ''} onChange={e => { const v = e.target.value; if (v === '__new__') { setShowNewCatInput(true); setForm(f => ({ ...f, category: '' })); } else { setForm({ ...form, category: v }); } }} className="input" required>
+      <option value="">-- Select category --</option>
+      {categories.map(c => <option key={c} value={c}>{c}</option>)}
+      <option value="__new__">+ Add new category</option>
+    </select>
+  )}
  <div><label className="block text-sm font-medium mb-1">Stock</label><input type="number" value={form.stock} onChange={e => setForm({ ...form, stock: e.target.value })} className="input" required /></div>
  </div>
  <div className="mb-4">
